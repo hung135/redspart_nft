@@ -29,10 +29,35 @@ WORKDIR /home/app
 RUN apt-get update
 RUN apt-get -y install curl gnupg
 RUN curl -sL https://deb.nodesource.com/setup_15.x  | bash -
-RUN apt-get -y install nodejs make
-RUN npm install
+RUN apt-get -y install nodejs make fish
+RUN npm install -g n
 RUN npm install -g truffle@5.3.4
 RUN npm install -g solc
+RUN n 12.13.1  
+RUN apt-get install -y webpack
+WORKDIR /tmp
+RUN wget https://github.com/trufflesuite/ganache-ui/archive/refs/tags/v2.6.0-beta.3.tar.gz
+RUN tar -xvf v2.6.0-beta.3.tar.gz 
+WORKDIR /tmp/ganache-ui-2.6.0-beta.3 
+RUN apt-get install -y gcc g++ build-essential
+RUN npm install
+RUN npm run dev
+RUN npm run build-linux 
+
+#install yarn to install electron webpack
+# curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+# echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+# sudo apt update
+# sudo apt install yarn
+
+# npm install -g n   # Install n globally
+# n 12.13.1           #install specific version of node
+
+# yarn add electron-webpack electron webpack --dev
+# yarn add source-map-support
+
+
+
 
 # Setting the ENTRYPOINT to docker-init.sh will configure non-root access 
 # to the Docker socket. The script will also execute CMD as needed.

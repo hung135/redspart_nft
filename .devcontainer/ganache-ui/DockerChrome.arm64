@@ -1,0 +1,8 @@
+FROM debian:latest
+RUN apt-get update
+RUN apt-get install -y chromium vim 
+#RUN apt-get install -qqy x11-apps
+#ENV DISPLAY=host.docker.internal:0
+ENV DISPLAY=192.168.1.152:0
+ENTRYPOINT ["/usr/lib/chromium/chromium","--no-sandbox", "www.youtube.com"]
+CMD [ "sleep", "infinity" ]
